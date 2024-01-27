@@ -64,7 +64,7 @@ def login():
         akun = cursor.fetchone()
         if akun is None:
             flash('Login Failed!!! Check Your Username', 'danger')
-        elif not check_password_hash(akun['password'], password):
+        elif not check_password_hash(akun[3], password):
             flash('Login Failed!!! Check Your Password', 'danger')
         else:
             session['loggedin'] = True
