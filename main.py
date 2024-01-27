@@ -15,16 +15,16 @@ app = Flask(__name__)
 app.secret_key = 'kuncisecret'
 
 # Ubah konfigurasi koneksi ke MySQL
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'db_prediction'
-mysql = MySQL(app)
-# db = pymysql.connect(host='localhost',
-#                      user='root',
-#                      password='',
-#                      database='db_prediction',
-#                      cursorclass=pymysql.cursors.DictCursor)
+# app.config['MYSQL_HOST'] = 'localhost'
+# app.config['MYSQL_USER'] = 'root'
+# app.config['MYSQL_PASSWORD'] = ''
+# app.config['MYSQL_DB'] = 'db_prediction'
+# mysql = MySQL(app)
+db = pymysql.connect(host='localhost',
+                     user='root',
+                     password='',
+                     database='db_prediction',
+                     cursorclass=pymysql.cursors.DictCursor)
 
 @app.route('/')
 def index():
