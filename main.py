@@ -68,8 +68,8 @@ def login():
             flash('Login Failed!!! Check Your Password', 'danger')
         else:
             session['loggedin'] = True
-            session['username'] = akun['username']
-            session['level'] = akun['level']
+            session['username'] = akun[1]
+            session['level'] = akun[4]
             return redirect(url_for('index'))
     return render_template('login.html')
 
