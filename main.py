@@ -7,6 +7,7 @@ import pandas as pd
 import pickle
 import joblib
 import math
+import ssl
 
 app = Flask(__name__)
 
