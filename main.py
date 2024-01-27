@@ -15,16 +15,16 @@ app = Flask(__name__)
 app.secret_key = 'kuncisecret'
 
 # Ubah konfigurasi koneksi ke MySQL
-# app.config['MYSQL_HOST'] = 'localhost'
-# app.config['MYSQL_USER'] = 'root'
-# app.config['MYSQL_PASSWORD'] = ''
-# app.config['MYSQL_DB'] = 'db_prediction'
-# mysql = MySQL(app)
-db = pymysql.connect(host='localhost',
-                     user='root',
-                     password='',
-                     database='db_prediction',
-                     cursorclass=pymysql.cursors.DictCursor)
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'db_prediction'
+mysql = MySQL(app)
+# db = pymysql.connect(host='localhost',
+#                      user='root',
+#                      password='',
+#                      database='db_prediction',
+#                      cursorclass=pymysql.cursors.DictCursor)
 
 @app.route('/')
 def index():
@@ -41,13 +41,13 @@ def registrasi():
         password = request.form['password']
         level = request.form['level']
 
-        cursor = db.cursor()
+        cursor = mysql.connection.cursor()
         cursor.execute('SELECT * FROM tb_login WHERE username=%s OR email=%s', (username, email))
         akun = cursor.fetchone()
         if akun is None:
             cursor.execute('INSERT INTO tb_login (username, email, password, level) VALUES (%s, %s, %s, %s)',
                            (username, email, generate_password_hash(password), level))
-            db.commit()
+            mysql.connection.commit()
             flash('Registration Successful... Please Click Login at the bottom', 'success')
         else:
             flash('Username or Email already exists.. Please Try Again', 'danger')
@@ -59,7 +59,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        cursor = db.cursor()
+        cursor = mysql.connection.cursor()
         cursor.execute('SELECT * FROM tb_login WHERE email=%s', (email,))
         akun = cursor.fetchone()
         if akun is None:
